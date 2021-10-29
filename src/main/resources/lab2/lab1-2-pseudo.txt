@@ -1,0 +1,21 @@
+findFirstThreeMax(A)
+
+	max<-minInt
+	preMax<-minInt 
+	prePreMax<-minInt
+	
+	for i<-0 to length(A)-1 do
+		if A[i]>prePreMax then
+			if (A[i]>=max) then
+				prePreMax = preMax
+				preMax = max
+				max = A[i]							
+			else if (A[i]>=preMax && A[i]<max) then
+				prePreMax = preMax
+				preMax = A[i]
+			else 
+				prePreMax = A[i]		
+	
+	
+	
+	

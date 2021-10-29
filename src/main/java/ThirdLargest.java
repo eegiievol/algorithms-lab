@@ -44,16 +44,49 @@ public class ThirdLargest {
         return arr[thirdIdx];
     }
 
+    public int thirdLargestByOneLoop(int[] arr) {
+        int max = Integer.MIN_VALUE;
+        int preMax = Integer.MIN_VALUE;
+        int prePreMax = Integer.MIN_VALUE;
+
+        for (int i=0; i<arr.length-1; i++) {
+            if (arr[i] > prePreMax) {
+                if (arr[i] >= max) {
+                    prePreMax = preMax;
+                    preMax = max;
+                    max = arr[i];
+                }
+			else if (arr[i] >= preMax && arr[i] < max) {
+                    prePreMax = preMax;
+                    preMax = arr[i];
+                }
+			else
+                prePreMax = arr[i];
+            }
+        }
+        return prePreMax;
+    }
+
     public static void main(String[] args) {
         long start;
         long finish;
         ThirdLargest thirdLargest = new ThirdLargest();
 
+        System.out.println("3 nested loops");
         for (int i = 1000; i <= 10000; i += 1000) {
             int[] arr = thirdLargest.GenerateNumbers(i);
-
             start = System.nanoTime();
             thirdLargest.thirdLargestByThreeLoops(arr);
+            finish = System.nanoTime();
+            System.out.println(i + "," + (finish - start));
+
+        }
+
+        System.out.println("\nSingle loop");
+        for (int i = 1000; i <= 10000; i += 1000) {
+            int[] arr = thirdLargest.GenerateNumbers(i);
+            start = System.nanoTime();
+            thirdLargest.thirdLargestByOneLoop(arr);
             finish = System.nanoTime();
             System.out.println(i + "," + (finish - start));
         }
