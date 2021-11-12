@@ -89,31 +89,36 @@ class Solution:
         self.quickSort(nums, f, i-1) 
         self.quickSort(nums, i+1, l)
     """
-    
+
     def heapSort(self, nums, len):        
-        def heapify(nums, len, i):            
+        def heapify(nums, len, i): 
+            comparison=0           
             while i*2+1<len:
                 m = i*2+1
+                comparison += 1
                 if i*2+2<len and nums[i*2+2]>nums[i*2+1]:
+                    comparison += 1
                     m = i*2+2
                 if nums[i]<nums[m]:
                     nums[i], nums[m] = nums[m], nums[i]
-                i = m                 
+                i = m
+            return comparison                                 
         
         idx=len
+        c = 0
         while idx>0:
             for i in range(idx//2+1, -1, -1):
-                heapify(nums,idx,i)
+                c += heapify(nums,idx,i)
             nums[idx-1], nums[0] = nums[0], nums[idx-1]
             idx-=1
+        return c
         
     def sortArray(self, nums):       
         
         #self.mergeSort(nums, 0, len(nums)-1)  
         #self.quickSort(nums, 0, len(nums)-1) 
-        self.hearSort(nums, len(nums))
-        
-        return nums
+
+        return self.hearSort(nums, len(nums))
 
 set = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
 [2, 1, 4, 3, 6, 5, 8, 7, 10, 9, 12, 11, 14, 13, 16, 15],
@@ -123,5 +128,7 @@ set = [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
 
 for lis in set:
     o = Solution()
-    o.heapSort(lis, len(lis))
+    comparisons = o.heapSort(lis, len(lis))
     print("sorted:", lis)
+    print("comparisons:", comparisons)
+    
